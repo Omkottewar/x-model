@@ -1,4 +1,4 @@
-/* .modal is the background overlay */
+/* Modal background (overlay) */
 .modal {
   display: flex;
   justify-content: center;
@@ -8,11 +8,11 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
   z-index: 1000;
 }
 
-/* .modal-content is the actual modal box */
+/* Modal content box */
 .modal-content {
   background-color: white;
   width: 400px;
@@ -23,23 +23,17 @@
   z-index: 1001;
 }
 
-/* Additional styling for form and buttons */
+/* Additional styling for form elements and button */
+input,
 button {
-  background-color: skyblue;
-  padding: 10px 20px;
-  font-size: 1.2rem;
-  border-radius: 5px;
-}
-
-input {
-  padding: 8px;
-  margin: 5px 0;
-  font-size: 1rem;
+  padding: 10px;
+  margin: 10px 0;
 }
 
 .submit-button {
   background-color: #4caf50;
   color: white;
-  padding: 10px 20px;
   border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
 }
