@@ -2,90 +2,72 @@ import "./App.css";
 import React, { useState } from "react";
 
 function App() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [errors, setErrors] = useState({});  // To store error messages for each field
+  const [isOpen, setIsOpen] = useState(false);  // State to track modal visibility
 
+  // Open the modal when "Open Form" is clicked
   const clickHandler = () => {
     setIsOpen(true);
   };
 
+  // Close the modal when clicking outside the modal content
   const closeHandler = (e) => {
-    // Close the modal if the user clicks outside the modal content
-    if (e.target.className === "modal") setIsOpen(false);
+    // Ensure the click happens outside of the modal content to close it
+    if (e.target.className === "modal") {
+      setIsOpen(false);
+    }
   };
 
+  // Handle form submission with validation
   const submitHandler = (e) => {
     e.preventDefault();
-    const { username, email, phoneNo, dob } = e.target;
-    let validationErrors = {};  // Object to hold error messages
 
-    // Validate Username
-    if (!username.value) {
-      validationErrors.username = "Username is required.";
-    }
-
-    // Validate Email
-    if (!email.value) {
-      validationErrors.email = "Email is required.";
-    } else if (!email.value.includes("@")) {
-      validationErrors.email = "Invalid email. Please check your email address.";
-    }
-
-    // Validate Phone Number
-    if (!phoneNo.value) {
-      validationErrors.phoneNo = "Phone number is required.";
-    } else if (phoneNo.value.toString().length !== 10) {
-      validationErrors.phoneNo = "Invalid phone number. Please enter a 10-digit phone number.";
-    }
-
-    // Validate Date of Birth
-    if (!dob.value) {
-      validationErrors.dob = "Date of Birth is required.";
-    } else if (new Date(dob.value).getTime() > Date.now()) {
-      validationErrors.dob = "Invalid date of birth. Date of birth cannot be in the future.";
-    }
-
-    // Set errors if validation fails
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-    } else {
-      // If no errors, reset form and close modal
+    // Validate phone number
+    if (e.target.phoneNo.value.toString().length !== 10) {
+      alert("Invalid phone number. Please enter a 10-digit phone number.");
+    } 
+    // Validate date of birth (not in future)
+    else if (new Date(e.target.dob.value).getTime() > Date.now()) {
+      alert("Invalid date of birth. Date of birth cannot be in the future.");
+    } 
+    else {
+      // Reset form fields after submission if no errors
       e.target.username.value = "";
       e.target.email.value = "";
       e.target.phoneNo.value = "";
       e.target.dob.value = "";
-      setIsOpen(false);  // Close the modal
+
+      // Close modal after successful submission
+      setIsOpen(false);
     }
   };
 
   return (
     <div className="App">
+      {/* Button to open the modal */}
       <button onClick={clickHandler}>Open Form</button>
+
+      {/* Modal */}
       {isOpen && (
         <div className="modal" onClick={closeHandler}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-content">
             <h1>User Details Modal</h1>
             <form onSubmit={submitHandler}>
               <h2>Fill Details</h2>
               <div className="input-group">
                 <label htmlFor="username">Username: </label>
-                <input type="text" name="username" id="username" />
-                {errors.username && <p className="error">{errors.username}</p>}
+                <input type="text" name="username" id="username" required />
               </div>
               <div className="input-group">
                 <label htmlFor="email">Email Address:</label>
                 <input type="email" name="email" id="email" required />
-                {errors.email && <p className="error">{errors.email}</p>}
               </div>
               <div className="input-group">
                 <label htmlFor="phoneNo">Phone Number:</label>
-                <input type="number" name="phoneNo" id="phone" required />
-                {errors.phoneNo && <p className="error">{errors.phoneNo}</p>}
+                <input type="tel" name="phoneNo" id="phone" required />
               </div>
               <div className="input-group">
                 <label htmlFor="dob">Date of Birth:</label>
-                <input type="date" name="dob" id="dob" />
-                {errors.dob && <p className="error">{errors.dob}</p>}
+                <input type="date" name="dob" id="dob" required />
               </div>
               <button type="submit" className="submit-button">
                 Submit
