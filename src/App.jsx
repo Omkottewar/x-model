@@ -1,4 +1,3 @@
-
 import "./App.css";
 import React, { useState } from "react";
 function App() {
@@ -29,12 +28,11 @@ function App() {
 
   return (
     <div className="App">
-              <button onClick={clickHandler}>Open Form</button>
+      <button onClick={clickHandler}>Open Form</button>
       <div className="modal">
         <h1>User Details Modal</h1>
-
         {isOpen && (
-          <div className="modal-content" onClick={closeHandler}>
+          <div className="modal-content" id="root" onClick={closeHandler}>
             <form onSubmit={submitHandler}>
               <h2>Fill Details</h2>
               <div className="input-group">
